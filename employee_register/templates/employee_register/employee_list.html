@@ -2,6 +2,39 @@
 
 
 {% block content %}
-<p>We'll show a list of employees from the table </p>
+<table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+    <tr>
+        <td>Fullname</td>
+        <td>Mobile</td>
+        <td>Position</td>
+        <td>
+            <a href="{% url 'employee-insert'  %}" class="btn btn-outline-success">
+                <i class="fas fa-plus"></i> Add New
+            </a>
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+        {% for employee in employee_list %}
+                <tr>
+                    <td>{{employee.fullname}}</td>
+                    <td>{{employee.mobile}}</td>
+                    <td>{{employee.position}}</td>
+                    <td>
+                        <a href="{% url 'employee-update'  employee.id %}" class="btn text-secondary px-0">
+                            <i class="far fa-edit fa-lg"></i>Update
+                        </a>
+                        <form action="{%url 'employee-delete' employee.id %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn">
+                                <i class="far fa-trash-alt fa-lg text-danger float-right"></i>Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock content %}
 
